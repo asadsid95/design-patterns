@@ -102,6 +102,9 @@ function maxProfit(prices) {
 const prices = [7, 1, 5, 3, 6, 4];
 // console.log(maxProfit(prices));
 
+//-------------------------
+// # . Search in rotated sorted array
+
 function binSearch(nums, target) {
   /* 
   Find middle using the 2 pointers, compare its value with target 
@@ -144,4 +147,50 @@ function binSearch(nums, target) {
 
 const nums = [4, 5, 6, 7, 0, 1, 2];
 const target = 1;
-console.log(binSearch(nums, target));
+// console.log(binSearch(nums, target));
+
+//
+
+//-------------------------
+// # 20 Valid parenthesis
+
+var isValid = function (s) {
+  // store valid pairs in dict?
+  const validPairs = {
+    "(": ")",
+    "[": "]",
+    "{": "}",
+  };
+  // create empty stack
+  let stack = [];
+
+  // iterate over str
+  // for (let i = 0; i < s.length; i++) {
+
+  if (s.length === 1) return false;
+
+  for (const char of s) {
+    // check if char is reference-dict to add to stack
+    if (validPairs.hasOwnProperty(char)) {
+      stack.push(char);
+    } else if (Object.values(validPairs).includes(char)) {
+      // check if char is one of the values in the dict
+      if (stack.length === 0) {
+        return false;
+      }
+
+      let popped_opening_value = stack.pop();
+      // check if char is correct closing tag for popped value
+      if (validPairs[popped_opening_value] !== char) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  return stack.length === 0;
+};
+
+const parenthesis_string = "[([])])";
+console.log(isValid(parenthesis_string));
